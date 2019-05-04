@@ -95,8 +95,8 @@ def get_ordinal_score(score):
 
 
 def cropped_image(full_image):
-    w_min = 620 - (args.display_width // 4)
-    w_max = 620 + (args.display_width // 4)
+    w_min = 960 - (args.display_width // 4)
+    w_max = 960 + (args.display_width // 4)
     out = full_image[0:args.display_height, w_min:w_max]
     return out
 
