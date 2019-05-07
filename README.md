@@ -28,7 +28,7 @@ You will need:
 The project was tested with the following setup:
 
 | Item          | Version/Model           |
-| ------------- |:-----------------------:|
+| ------------- |:----------------------- |
 | GPU           | Nvidia GeForce GTX 965M |
 | Ubuntu        | 16.04.6 LTS             |
 | Nvidia driver | 418                     |
@@ -49,11 +49,11 @@ The steps are quite long but well documented so I shall not repeat them here.
 ### Installing
 After you have installed the prerequisites, getting the project running is easy. Just clone this repository in the same directory with OpenPose. i.e. the folder structure should look like
 
+```
 .
-+-- _openpose
-
-+-- _CV-pose-detection
-+
++-- openpose
++-- CV-pose-detection
+```
 
 The git clone command
 ```
