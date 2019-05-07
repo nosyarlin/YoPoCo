@@ -8,7 +8,7 @@ We compared two methods of calculating similarity scores. They are namely using 
 + ComparatorNet.ipynb: Jupyter notebook used to build our network along with its evaluation
 + Cosine similarity.ipynb: Jupyter notebook used to evaluate the cosine similarity method
 + get_openpose_coords.py: Script to run through our entire image dataset and extract pose coordinates using OpenPose
-+ model_history_log.csv: Allows me to plot loss and accuracy over time as I trained the neural network
++ model_history_log.csv: Allows me to plot loss and accuracy over time after I have trained the neural network
 + demo.py: Demo file. It's pretty cool to run if you have OpenPose installed properly
 
 The coords directory contains all the pose coordinates extracted from our image dataset. The image dataset will not be made available here. 
@@ -26,6 +26,7 @@ You will need:
 + Python 3
 
 The project was tested with the following setup:
+
 | Item          | Version/Model           |
 | ------------- |:-----------------------:|
 | GPU           | Nvidia GeForce GTX 965M |
@@ -35,7 +36,7 @@ The project was tested with the following setup:
 | cuDNN         | 7.5                     |
 | OpenPose      | 1.4.0                   |
 | Pytorch       | 1.0.1                   |
-| Python.       | 3.5.2                   |
+| Python 3      | 3.5.2                   |
 
 [Documentation](https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html) I followed to install Nvidia drivers, CUDA and cuDNN.
 
@@ -50,6 +51,7 @@ After you have installed the prerequisites, getting the project running is easy.
 
 .
 +-- _openpose
+
 +-- _CV-pose-detection
 +
 
