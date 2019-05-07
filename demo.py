@@ -11,8 +11,8 @@ from openpose import pyopenpose as op
 
 # Flags
 parser = argparse.ArgumentParser()
-parser.add_argument('--model_folder', type=str, default='./openpose/models/')
-parser.add_argument('--target_video', type=str, default='./data/yoga.mp4')
+parser.add_argument('--model_folder', type=str, default='../openpose/models/')
+parser.add_argument('--target_video', type=str, default='./yoga.mp4')
 parser.add_argument('--net_resolution', type=str, default='176x176')
 parser.add_argument('--cam_width', type=int, default=1920)
 parser.add_argument('--cam_height', type=int, default=1080)
