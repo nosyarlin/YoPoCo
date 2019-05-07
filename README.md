@@ -71,9 +71,18 @@ Finally, run the demo
 python3 demo.py
 ```
 
+Here are some images of our project in action
+<p align="center">
+    <img src="doc/media/genius.png", width="360">
+    <img src="doc/media/bad.png", width="360
+    ">
+    <br>
+    <sup>Jason trying his best to do yoga</sup>
+</p>
+
 ## Authors
 
-* **Rayson Lim** 
+* [Rayson Lim](github.com/nosyarlin)
 
 
 ## Acknowledgments
