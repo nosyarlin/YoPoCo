@@ -88,3 +88,4 @@ Here are some images of our project in action
 ## Acknowledgments
 
 * This project is made possible by the [team](https://github.com/CMU-Perceptual-Computing-Lab) behind OpenPose
+* Yoga video is by Adriene, Y. W. (2019, March 30). Office Break Yoga | 14 Min. Yoga Practice | Yoga With Adriene. Retrieved from https://www.youtube.com/watch?v=M-8FvC3GD8c
