@@ -14,8 +14,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--model_folder', type=str, default='../openpose/models/')
 parser.add_argument('--target_video', type=str, default='./yoga.mp4')
 parser.add_argument('--net_resolution', type=str, default='176x176')
-parser.add_argument('--cam_width', type=int, default=1920)
-parser.add_argument('--cam_height', type=int, default=1080)
+parser.add_argument('--cam_width', type=int, default=1280)
+parser.add_argument('--cam_height', type=int, default=720)
 parser.add_argument('--display_width', type=int, default=1920)
 parser.add_argument('--display_height', type=int, default=1080)
 parser.add_argument('--number_people_max', type=int, default=1)
@@ -95,8 +95,10 @@ def get_ordinal_score(score):
 
 
 def cropped_image(full_image):
-    w_min = 960 - (args.display_width // 4)
-    w_max = 960 + (args.display_width // 4)
+    full_image = cv2.resize(full_image,
+                            (args.display_width, args.display_height))
+    w_min = args.cam_width // 2 - (args.display_width // 4)
+    w_max = args.cam_width // 2 + (args.display_width // 4)
     out = full_image[0:args.display_height, w_min:w_max]
     return out
 
