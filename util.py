@@ -93,14 +93,21 @@ def get_webcam(w, h):
     return stream
 
 
-def get_image(stream, w, h):
+def get_image(stream, w, h, frame_count=None):
     ret, img_original = stream.read()
     img = cv2.flip(
             crop_image(
                 img_original,
                 w, h
             ), 1)
-    return img
+
+    # Reset video if reached end
+    frame_count += 1
+    if frame_count == stream.get(cv2.cv.CV_CAP_PROP_FRAME_COUNT):
+        frame_count = 0
+        stream.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, 0)
+
+    return img, frame_count
 
 
 def label_img(opWrapper, img):

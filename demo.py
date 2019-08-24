@@ -37,6 +37,7 @@ opWrapper.start()
 # Start streams
 webcam = get_webcam(args.cam_width, args.cam_height)
 target = cv2.VideoCapture(args.target_video)
+frame_count = 0
 
 # Define the codec and create VideoWriter object
 fourcc = cv2.VideoWriter_fourcc('M', 'J', 'P', 'G')
@@ -58,8 +59,11 @@ while True:
     frames += 1
 
     # Get images
-    webcam_img = get_image(webcam, args.cam_width, args.cam_height)
-    target_img = get_image(target, args.cam_width, args.cam_height)
+    webcam_img, _ = get_image(webcam, args.cam_width, args.cam_height)
+    target_img, frame_count = get_image(
+                                target, args.cam_width,
+                                args.cam_height, frame_count
+                              )
     if webcam_img is None or target_img is None:
         continue
 
