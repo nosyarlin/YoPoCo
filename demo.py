@@ -41,7 +41,7 @@ target = cv2.VideoCapture(args.target_video)
 # Define the codec and create VideoWriter object
 fourcc = cv2.VideoWriter_fourcc('M', 'J', 'P', 'G')
 out = cv2.VideoWriter(
-    'yoga_output.avi',
+    'yoga_output.mp4',
     fourcc,
     10.0,
     (args.cam_width, args.cam_height)
