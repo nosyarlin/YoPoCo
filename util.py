@@ -102,10 +102,11 @@ def get_image(stream, w, h, frame_count=None):
             ), 1)
 
     # Reset video if reached end
-    frame_count += 1
-    if frame_count == stream.get(cv2.cv.CV_CAP_PROP_FRAME_COUNT):
-        frame_count = 0
-        stream.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, 0)
+    if frame_count:
+        frame_count += 1
+        if frame_count == stream.get(cv2.cv.CV_CAP_PROP_FRAME_COUNT):
+            frame_count = 0
+            stream.set(cv2.cv.CV_CAP_PROP_POS_FRAMES, 0)
 
     return img, frame_count
 
