@@ -34,10 +34,8 @@ opWrapper = op.WrapperPython()
 opWrapper.configure(params)
 opWrapper.start()
 
-# Start webcam
+# Start streams
 webcam = get_webcam(args.cam_width, args.cam_height)
-
-# Read target video
 target = cv2.VideoCapture(args.target_video)
 
 # Define the codec and create VideoWriter object
@@ -60,60 +58,59 @@ while True:
     frames += 1
 
     # Get images
-    img = get_image(webcam, args.cam_width, args.cam_height)
+    webcam_img = get_image(webcam, args.cam_width, args.cam_height)
     target_img = get_image(target, args.cam_width, args.cam_height)
-    if img is None or target_img is None:
+    if webcam_img is None or target_img is None:
         continue
 
     # Label images
-    img_datum = label_img(opWrapper, img)
+    webcam_datum = label_img(opWrapper, webcam_img)
     target_datum = label_img(opWrapper, target_img)
 
     # Check if OpenPose managed to label
-    if type(img_datum.poseKeypoints) != np.ndarray or \
-       img_datum.poseKeypoints.shape != (1, 25, 3):
-        continue
+    ordinal_score = ('', 0.0, (0, 0, 0))
+    if type(webcam_datum.poseKeypoints) == np.ndarray and \
+       webcam_datum.poseKeypoints.shape == (1, 25, 3):
 
-    elif type(target_datum.poseKeypoints) != np.ndarray or \
-         target_datum.poseKeypoints.shape != (1, 25, 3):
-        continue
+        if type(target_datum.poseKeypoints) == np.ndarray or \
+             target_datum.poseKeypoints.shape == (1, 25, 3):
 
-    # Scale, transform, normalize, reshape, predict
-    coords_vec = make_vector(img_datum.poseKeypoints)
-    target_coords_vec = make_vector(target_datum.poseKeypoints)
-    input_vec = np.concatenate([coords_vec, target_coords_vec]).flatten()
-    similarity_score = model.predict(input_vec.reshape((1, -1)))
-    ordinal_score = get_ordinal_score(similarity_score)
+            # Scale, transform, normalize, reshape, predict
+            coords_vec = make_vector(webcam_datum.poseKeypoints)
+            target_coords_vec = make_vector(target_datum.poseKeypoints)
+            input_vec = np.concatenate([coords_vec, target_coords_vec]).flatten()
+            similarity_score = model.predict(input_vec.reshape((1, -1)))
+            ordinal_score = get_ordinal_score(similarity_score)
 
     # Concatenate webcam and target video
-    numpy_horizontal_concat = np.concatenate((img_datum.cvOutputData,
-                                              target_datum.cvOutputData),
-                                              axis=1)
+    screen_out = np.concatenate((webcam_datum.cvOutputData,
+                                 target_datum.cvOutputData),
+                                axis=1)
 
     # Add overlay to show results
-    overlay = numpy_horizontal_concat.copy()
+    overlay = screen_out.copy()
     cv2.rectangle(overlay, (0, 0), (args.cam_width // 2, args.cam_height),
-                  get_ordinal_score(similarity_score)[2], -1)
-    numpy_horizontal_concat = cv2.addWeighted(overlay, ordinal_score[1],
-                                              numpy_horizontal_concat,
-                                              1 - ordinal_score[1], 0,
-                                              numpy_horizontal_concat)
+                  ordinal_score[2], -1)
+    screen_out = cv2.addWeighted(overlay, ordinal_score[1],
+                                 screen_out,
+                                 1 - ordinal_score[1], 0,
+                                 screen_out)
 
     # Draw a vertical white line with thickness of 10 px
-    cv2.line(numpy_horizontal_concat, (args.cam_width // 2, 0),
+    cv2.line(screen_out, (args.cam_width // 2, 0),
              (args.cam_width // 2, args.cam_height),
              (255, 255, 255), 10)
 
     # Display comment
-    cv2.rectangle(numpy_horizontal_concat, (10, 30), (600, 120), (255, 255, 255), 3)
+    cv2.rectangle(screen_out, (10, 30), (600, 120), (255, 255, 255), 3)
     font = cv2.FONT_HERSHEY_DUPLEX
-    cv2.putText(numpy_horizontal_concat, ' ' + ordinal_score[0], (10, 100), font, 2, (0, 0, 255), 4, cv2.LINE_AA)
+    cv2.putText(screen_out, ' ' + ordinal_score[0], (10, 100), font, 2, (0, 0, 255), 4, cv2.LINE_AA)
 
     # Record Video
-    out.write(numpy_horizontal_concat)
+    out.write(screen_out)
 
     # Display img
-    cv2.imshow("Webcam and Target Image", numpy_horizontal_concat)
+    cv2.imshow("Webcam and Target Image", screen_out)
 
     # Check for quit
     key = cv2.waitKey(1)
@@ -128,7 +125,7 @@ while True:
         start = time.time()
 
 # Clean up
-stream.release()
-stream_target.release()
+webcam.release()
+target.release()
 out.release()
 cv2.destroyAllWindows()
