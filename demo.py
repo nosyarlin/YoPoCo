@@ -61,7 +61,7 @@ while True:
 
     # Get images
     img = get_image(webcam, args.cam_width, args.cam_height)
-    target_img = get_image(webcam, args.cam_width, args.cam_height)
+    target_img = get_image(target, args.cam_width, args.cam_height)
     if img is None or target_img is None:
         continue
 
