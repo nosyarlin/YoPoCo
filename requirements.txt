@@ -1,7 +1,7 @@
 Keras==2.2.4
 Keras-Applications==1.0.7
 Keras-Preprocessing==1.0.9
-numpy==1.16.2
+numpy==1.22.0
 opencv-python==3.4.1.15
 pandas==0.24.2
 Pillow==3.3.2
